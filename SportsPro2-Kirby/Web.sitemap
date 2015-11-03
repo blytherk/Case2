@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="Home.aspx" title="Home"  description="Home Page">
+        <siteMapNode url="CustomerSupport.aspx" title="Customer Support"  description="Customer Support Page" />
+          <siteMapNode>
+            <siteMapNode url="ProductRegistration.aspx" title="Register products"  description="Prodcut Registration Page" />
+            <siteMapNode url="CustomerSurvey.aspx" title="Complete Customer Survey" description="Customer Survey"/>
+            <siteMapNode url="ContactUs.aspx" title="Contact us" description="Contact Us Page"/>
+          </siteMapNode>
+        <siteMapNode url="TechnicianSupport.aspx" title="Technical Support"  description="Technical Support Page" />
+          <siteMapNode>
+            <siteMapNode url="CustomerIncidentDisplay.aspx" title="Display customer incidents"/>
+            <siteMapNode url="IncidentUpdate.aspx" title="Update incidents"/>
+          </siteMapNode>
+        <siteMapNode url="Administration.aspx" title="Administration"  description="Administration Page" />
+          <siteMapNode>
+            <siteMapNode url="ProductMaintenance.aspx" title="Maintain Products"/>
+            <siteMapNode url="CustomerMaintenance.aspx" title="Maintain customers"/>
+            <siteMapNode url="TechnicianMaintenance.aspx" title="Maintain technicians"/>
+            <siteMapNode url="IncidentDisplay.aspx" title="Display incidents"/>
+            <siteMapNode url="CustomerDisplay.aspx" title="Display customers"/>
+            <siteMapNode url="TechnicianIncidentSummary.aspx" title="Display incidents by technician"/>
+          </siteMapNode>
+        
+    </siteMapNode>
+  
+</siteMap>
+
