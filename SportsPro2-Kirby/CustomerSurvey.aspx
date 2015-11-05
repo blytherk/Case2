@@ -28,13 +28,16 @@
             <br />
             <div class="row">
                 <div class="col-xs-12">
-                    <asp:ListBox ID="lbIncident" runat="server" Width="500px"></asp:ListBox>
+                    <asp:ListBox ID="lbIncident" runat="server" Width="500px" TabIndex="1" Enabled="False">
+                    </asp:ListBox>
                     <asp:SqlDataSource ID="dsCustIncidents" runat="server" ConnectionString="<%$ ConnectionStrings:TechSupportConnectionString %>" SelectCommand="SELECT [IncidentID], [Title], [DateClosed], [DateOpened], [TechID], [ProductCode], [CustomerID] FROM [Incidents] WHERE (([CustomerID] = @CustomerID) AND ([DateClosed] IS NOT NULL)) ORDER BY [DateClosed]">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="tbEnterCustID" Name="CustomerID" PropertyName="Text" Type="Int32" />
                         </SelectParameters>
                     </asp:SqlDataSource>
-                    <asp:RequiredFieldValidator ID="RequiredValFieldIncidentList" runat="server" ErrorMessage="*Please select an incident" ValidationGroup="valGroupSelectIncident" ControlToValidate="lbIncident" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredValFieldIncidentList" runat="server" ErrorMessage="*Please select an incident" 
+                        ValidationGroup="valGroupSelectIncident" 
+                        ControlToValidate="lbIncident" ForeColor="Red"></asp:RequiredFieldValidator>
                     <br />
                    
                 </div>
@@ -50,7 +53,7 @@
                     Response time:
                 </div>
                 <div class="col-xs-10">
-                    <asp:RadioButtonList ID="rbResponse" runat="server" RepeatDirection="Horizontal">
+                    <asp:RadioButtonList ID="rbResponse" runat="server" RepeatDirection="Horizontal" Enabled="False">
                         <asp:ListItem Value="1">Not Satisfied</asp:ListItem>
                         <asp:ListItem Value="2">Somewhat Satisfied</asp:ListItem>
                         <asp:ListItem Value="3">Satisfied</asp:ListItem>
@@ -63,7 +66,7 @@
                     Technician efficiency:
                 </div>
                 <div class="col-xs-10">
-                    <asp:RadioButtonList ID="rbTechEfficiency" runat="server" RepeatDirection="Horizontal">
+                    <asp:RadioButtonList ID="rbTechEfficiency" runat="server" RepeatDirection="Horizontal" Enabled="False">
                         <asp:ListItem>Not Satisfied</asp:ListItem>
                         <asp:ListItem>Somewhat Satisfied</asp:ListItem>
                         <asp:ListItem>Satisfied</asp:ListItem>
@@ -76,7 +79,7 @@
                     Problem resolution:
                 </div>
                 <div class="col-xs-10">
-                    <asp:RadioButtonList ID="rbResolution" runat="server" RepeatDirection="Horizontal">
+                    <asp:RadioButtonList ID="rbResolution" runat="server" RepeatDirection="Horizontal" Enabled="False">
                         <asp:ListItem> Not Satisfied </asp:ListItem>
                         <asp:ListItem> Somewhat Satisfied </asp:ListItem>
                         <asp:ListItem> Satisfied </asp:ListItem>
@@ -89,26 +92,27 @@
                     Additional Comments:
                 </div>
                 <div class="col-xs-10">
-                    <asp:TextBox ID="tbComments" runat="server" TextMode="MultiLine" Width="500px" Height="100px"></asp:TextBox>
+                    <asp:TextBox ID="tbComments" runat="server" TextMode="MultiLine" Width="500px" Height="100px" Enabled="False"></asp:TextBox>
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-sx-2">
-                    <asp:CheckBox ID="cbContact" runat="server" Text="Please contact me to discuss this incident" />
+                    <asp:CheckBox ID="cbContact" runat="server" Text="Please contact me to discuss this incident" Enabled="False" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3">
-                    <asp:RadioButton ID="rbEmail" runat="server" Text="Contact by email" />
+                    <asp:RadioButton ID="rbEmail" runat="server" Text="Contact by email" Enabled="False" />
                     <br />
-                    <asp:RadioButton ID="rbPhone" runat="server" Text="Contact by Phone" />
+                    <asp:RadioButton ID="rbPhone" runat="server" Text="Contact by Phone" Enabled="False" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-2">
-                    <asp:Button ID="btnSubmitSurvey" runat="server" Text="Submit" OnClick="btnSubmitSurvey_Click" ValidationGroup="valGroupSelectIncident" />
+                    <asp:Button ID="btnSubmitSurvey" runat="server" Text="Submit" OnClick="btnSubmitSurvey_Click" ValidationGroup="valGroupSelectIncident" Enabled="False" />
                 </div>
+                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             </div>
 
         </div>

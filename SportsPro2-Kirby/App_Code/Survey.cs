@@ -12,11 +12,7 @@ public class Survey
 	{
 		
 	}
-    public int CustomerID
-    {
-        get;
-        set;
-    }
+    public int CustomerID {get; set;}
     public int IncidentID { get; set; }
     public int ResponseTime { get; set; }
     public int TechEfficiency { get; set; }

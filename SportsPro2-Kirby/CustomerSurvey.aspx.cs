@@ -13,10 +13,10 @@ public partial class CustomerSurvey : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         SetFocus(tbEnterCustID);
-        if (IsPostBack)
-        {
-            lbIncident.Items.Clear();
-        }
+        //if (IsPostBack)
+        //{
+        //    lbIncident.Items.Clear();
+        //}
     }
     public List<Incident> GetCustomerIncidents()
     {
@@ -29,43 +29,72 @@ public partial class CustomerSurvey : System.Web.UI.Page
         foreach (DataRowView row in incidentTable)
         {
             Incident rowIncident = new Incident();
+            rowIncident.IncidentID = (int)row["IncidentID"];
             rowIncident.CustomerID = (int)row["CustomerID"];
             rowIncident.ProductCode = row["ProductCode"].ToString();
             rowIncident.TechID = (int)row["TechID"];
             rowIncident.DateOpened = (DateTime)row["DateOpened"];
             rowIncident.DateClosed = (DateTime)row["DateClosed"];
             rowIncident.Title = row["Title"].ToString();
-            
+
             incidentList.Add(rowIncident);
         }
         return incidentList;
     }
     protected void btnGetIncidents_Click(object sender, EventArgs e)
     {
+
+
         if (Page.IsValid)
         {
             incidentList = GetCustomerIncidents();
-            foreach (Incident i in incidentList)
+            if (incidentList.Count > 0)
             {
-                ListItem listItem = new ListItem(i.CustomerIncidentDisplay(), i.IncidentID.ToString());
-                lbIncident.Items.Add(listItem);
+                lbIncident.Items.Add(new ListItem("--Select an Incident--", "0"));
+                foreach (Incident i in incidentList)
+                {
+                    lbIncident.Items.Add(new ListItem(i.CustomerIncidentDisplay(), i.IncidentID.ToString()));
+                }
+                lbIncident.Enabled = true;
+                rbResponse.Enabled = true;
+                rbResolution.Enabled = true;
+                rbTechEfficiency.Enabled = true;
+                tbComments.Enabled = true;
+                cbContact.Enabled = true;
+                rbEmail.Enabled = true;
+                rbPhone.Enabled = true;
+                btnSubmitSurvey.Enabled = true;
             }
+            else
+            {
+                lbIncident.Items.Add(new ListItem("--No Incidents for Customer--", "0"));
+            }
+
+            SetFocus(lbIncident);
         }
-         
-        SetFocus(lbIncident);
         
-        
+
+
     }
     protected void btnSubmitSurvey_Click(object sender, EventArgs e)
     {
-        
-        Survey survey = new Survey();
-        survey.IncidentID = Int32.Parse(lbIncident.SelectedValue);
-        survey.CustomerID = Int32.Parse(tbEnterCustID.Text);
+        if (Int32.Parse(lbIncident.SelectedValue) > 0)
+        {
+            Survey survey = new Survey();
 
-        Session.Clear();
-        Session["Survey"] = survey;
-        //btnSubmitSurvey.PostBackUrl = "~/SurveyComplete.aspx";
+            Label1.Text = lbIncident.SelectedValue;
+            survey.IncidentID = Int32.Parse(lbIncident.SelectedValue);
+            survey.CustomerID = Int32.Parse(tbEnterCustID.Text);
+
+            Session.Clear();
+            Session["Survey"] = survey;
+            Response.Redirect("~/SurveyComplete.aspx");
+        }
+        //else
+        //{
+        //    RequiredValFieldIncidentList.
+        //}
+
     }
-   
+
 }
