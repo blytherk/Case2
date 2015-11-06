@@ -5,9 +5,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody" runat="Server">
     <div class="container">
         <h3>Thank you for your feed back!</h3>
+        <h4>A customer service representative will contact you within 24 hours.</h4>
         <h4>Below is a record of your survey results:</h4>
         <div class="col-xs-12">
-            <asp:TextBox ID="tbSurveyResults" runat="server" TextMode="MultiLine" Enabled="False"></asp:TextBox>
+            <asp:TextBox ID="tbSurveyResults" runat="server" TextMode="MultiLine" Enabled="False" Width="250px" Height="170px"></asp:TextBox>
         </div>
         <div class="col-xs-12">
             <asp:Button ID="btReturnToSurvey" runat="server" Text="Return to Survey" PostBackUrl="~/CustomerSurvey.aspx" />

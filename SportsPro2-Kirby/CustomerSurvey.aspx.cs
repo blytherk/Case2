@@ -12,16 +12,16 @@ public partial class CustomerSurvey : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        SetFocus(tbEnterCustID);
-        //if (IsPostBack)
+        //if (!IsPostBack)
         //{
-        //    lbIncident.Items.Clear();
-        //}
+        //    SetFocus(tbEnterCustID);
+        //}      
     }
     public List<Incident> GetCustomerIncidents()
     {
-        incidentList = new List<Incident>();
+        incidentList = new List<Incident>();//should clear the list
         int custID = Int32.Parse(tbEnterCustID.Text);
+        //this line keeps throwing an exception due the database???
         DataView incidentTable = (DataView)dsCustIncidents.Select(DataSourceSelectArguments.Empty);
         incidentTable.RowFilter = string.Format("DateClosed is not NULL and CustomerID = {0}", Int32.Parse(tbEnterCustID.Text));
 
@@ -43,10 +43,9 @@ public partial class CustomerSurvey : System.Web.UI.Page
     }
     protected void btnGetIncidents_Click(object sender, EventArgs e)
     {
-
-
         if (Page.IsValid)
         {
+            lbIncident.Items.Clear();
             incidentList = GetCustomerIncidents();
             if (incidentList.Count > 0)
             {
@@ -61,40 +60,60 @@ public partial class CustomerSurvey : System.Web.UI.Page
                 rbTechEfficiency.Enabled = true;
                 tbComments.Enabled = true;
                 cbContact.Enabled = true;
-                rbEmail.Enabled = true;
-                rbPhone.Enabled = true;
                 btnSubmitSurvey.Enabled = true;
+                SetFocus(lbIncident);
             }
             else
             {
+                //Response.Redirect(Request.RawUrl); this just reload the whole page may have to just disable controls individually
+
                 lbIncident.Items.Add(new ListItem("--No Incidents for Customer--", "0"));
+                tbEnterCustID.Focus();
+                //error can't figure out how to get page to default back to controls 
+                
             }
-
-            SetFocus(lbIncident);
         }
-        
-
-
     }
     protected void btnSubmitSurvey_Click(object sender, EventArgs e)
     {
-        if (Int32.Parse(lbIncident.SelectedValue) > 0)
+        if (Page.IsValid)
         {
-            Survey survey = new Survey();
+            //if incident selected not "--select incident--"
+            if (lbIncident.SelectedIndex > 0)
+            {
+                Survey survey = new Survey();
 
-            Label1.Text = lbIncident.SelectedValue;
-            survey.IncidentID = Int32.Parse(lbIncident.SelectedValue);
-            survey.CustomerID = Int32.Parse(tbEnterCustID.Text);
-
-            Session.Clear();
-            Session["Survey"] = survey;
+                Label1.Text = lbIncident.SelectedValue;
+                survey.IncidentID = Int32.Parse(lbIncident.SelectedValue);
+                survey.CustomerID = Int32.Parse(tbEnterCustID.Text);
+                survey.ResponseTime = Convert.ToInt32(rbResponse.SelectedValue);
+           
+                survey.Resolution = Convert.ToInt32(rbResolution.SelectedValue);
+                survey.TechEfficiency = Convert.ToInt32(rbTechEfficiency.SelectedValue);
+                survey.Contact = cbContact.Checked;
+                if (cbContact.Checked)
+                {
+                        survey.ContactBy = rbContactBy.Text; 
+                }
+                survey.Comments = tbComments.Text;
+                
+                Session["Survey"] = survey;
+                Response.Redirect("~/SurveyComplete.aspx");
+            }
+            //else
+            //{
+            //    RequiredValFieldIncidentList.
+            //}
             Response.Redirect("~/SurveyComplete.aspx");
         }
-        //else
-        //{
-        //    RequiredValFieldIncidentList.
-        //}
 
     }
 
+    protected void cbContact_CheckedChanged(object sender, EventArgs e)
+    {
+        if (cbContact.Checked)
+        {
+            rbContactBy.Enabled = true;
+        }
+    }
 }

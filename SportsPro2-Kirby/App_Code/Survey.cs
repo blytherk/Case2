@@ -8,10 +8,7 @@ using System.Web;
 /// </summary>
 public class Survey
 {
-	public Survey()
-	{
-		
-	}
+	public Survey(){}
     public int CustomerID {get; set;}
     public int IncidentID { get; set; }
     public int ResponseTime { get; set; }
