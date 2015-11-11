@@ -33,8 +33,17 @@
                             ID="RequiredFieldValidator1" 
                             runat="server" 
                             ErrorMessage="Version field is required" 
-                            ValidationGroup="Edit">
+                            ValidationGroup="Edit" 
+                            ControlToValidate="txtGridVersion">
                         </asp:RequiredFieldValidator>
+                        <asp:CompareValidator 
+                            ID="CompareValidator1" 
+                            runat="server" 
+                            Type="Double"
+                            ControlToValidate="txtGridVersion"
+                            ErrorMessage="Version must be a double"
+                            Operator="DataTypeCheck">
+                        </asp:CompareValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblGridVersion" runat="server" Text='<%#Bind("Version") %>'></asp:Label>
@@ -47,15 +56,41 @@
                         <asp:RequiredFieldValidator 
                             ID="RequiredFieldValidator2" 
                             runat="server" 
+                            ControlToValidate="txtGridReleaseDate"
                             ErrorMessage="RequiredFieldValidator" 
                             ValidationGroup="Edit">
                         </asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator 
+                            ID="RegularExpressionValidator2" 
+                            runat="server" 
+                            ErrorMessage="Date must be in mm/dd/yyyy format"
+                            ControlToValidate="txtGridReleaseDate"
+                            Text="*" 
+                            ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$">
+                        </asp:RegularExpressionValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate") %>'></asp:Label>
+                        <asp:Label ID="lblGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate", "{0:MM-dd-yyyy}") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" CancelImageUrl="~/Images/cancel.png" DeleteImageUrl="~/Images/delete.png" EditImageUrl="~/Images/delete.png"  />
+                <asp:CommandField 
+                    ShowEditButton="True" 
+                    CancelImageUrl="~/Images/cancel.png" 
+                    EditImageUrl="~/Images/edit.png" 
+                    UpdateImageUrl="~/Images/update.png" 
+                    ButtonType="Image" />
+            <asp:TemplateField ShowHeader="False">
+                <ItemTemplate>
+                    <asp:ImageButton ID="DeleteButton" ImageUrl="~/Images/delete.png" runat="server"
+                        CausesValidation="False"
+                        CommandName="Delete"
+                        OnClientClick='<%# Eval("Name", "return confirm(\"Are you sure you want to delete the following product? {0}\");") %>'
+                        Text="delete" />
+                </ItemTemplate>
+            </asp:TemplateField>
+            
+                <asp:CommandField />
+            
             </Columns>
             <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
             <HeaderStyle BackColor="#000084" Font-Bold="True" ForeColor="White" />
