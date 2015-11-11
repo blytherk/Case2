@@ -130,16 +130,16 @@
         <p>
             <asp:Label ID="lblError" runat="server" EnableViewState="False" CssClass="error"></asp:Label>
         </p>
-        <label>Product Code:</label>
+        <label>ProductCode:</label>
         <asp:TextBox ID="txtProductCode" runat="server" MaxLength="10" CssClass="entry">
-        </asp:TextBox>&nbsp;
+        </asp:TextBox>&nbsp; &nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
                 runat="server" ControlToValidate="txtProductCode" CssClass="validator"
                 ErrorMessage="Product Code is a required field." ValidationGroup="New">
             </asp:RequiredFieldValidator><br />
         <label>Name:</label>
         <asp:TextBox ID="txtName" runat="server" MaxLength="15" CssClass="entry">
-        </asp:TextBox>&nbsp;
+        </asp:TextBox>&nbsp; &nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator2"
                 runat="server" ControlToValidate="txtName" CssClass="validator"
                 ErrorMessage="Name is a required field." ValidationGroup="New">

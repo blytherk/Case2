@@ -26,9 +26,10 @@
                 </HeaderTemplate>
 
                 <FooterTemplate>
-                    <asp:Label ID="Label1" runat="server" Text="*No incidents for this customer.*" Visible='<%#bool.Parse((dlIncidents.Items.Count==0).ToString()) %>' ForeColor="Red" Font-Bold="True"></asp:Label>
+                    
                   
                     </table>
+                    <asp:Label ID="Label1" runat="server" Text="*No incidents for this customer.*" Visible='<%#bool.Parse((dlIncidents.Items.Count==0).ToString()) %>' ForeColor="Red" Font-Bold="True"></asp:Label>
                 </FooterTemplate>
 
                 <ItemTemplate>
