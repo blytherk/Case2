@@ -28,7 +28,7 @@
                 <%--<asp:BoundField DataField="Version" HeaderText="Version" SortExpression="Version" />--%>
                 <asp:TemplateField HeaderText="Version">
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtGridVersion" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtGridVersion" runat="server" Text='<%#Bind("Version") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator
                             ID="RequiredFieldValidator1"
                             runat="server"
@@ -52,7 +52,7 @@
                 <%--<asp:BoundField DataField="ReleaseDate" HeaderText="ReleaseDate" SortExpression="ReleaseDate" />--%>
                 <asp:TemplateField HeaderText="Release Date">
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtGridReleaseDate" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate", "{0:MM/dd/yyyy}") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator
                             ID="RequiredFieldValidator2"
                             runat="server"
@@ -70,7 +70,7 @@
                         </asp:RegularExpressionValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate", "{0:MM-dd-yyyy}") %>'></asp:Label>
+                        <asp:Label ID="lblGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate", "{0:MM/dd/yyyy}") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:CommandField
