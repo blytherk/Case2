@@ -11,4 +11,44 @@ public partial class ProductMaintenance : System.Web.UI.Page
     {
 
     }
+    protected void btnAdd_Click(object sender, EventArgs e)
+    { 
+        dsGridView.InsertParameters["ProductCode"].DefaultValue
+            = txtProductCode.Text;
+        dsGridView.InsertParameters["Name"].DefaultValue
+            = txtName.Text;
+        dsGridView.InsertParameters["Version"].DefaultValue
+            = txtVersion.Text;
+        dsGridView.InsertParameters["ReleaseDate"].DefaultValue = txtReleaseDate.Text;
+
+        try
+        {
+            dsGridView.Insert();
+            txtProductCode.Text = "";
+            txtName.Text = "";
+            txtVersion.Text = "";
+            txtReleaseDate.Text = "";
+        }
+        catch (Exception ex)
+        {
+            lblError.Text = "A database error has occurred.<br /><br />" +
+                "Message: " + ex.Message;
+        }
+    }
+    protected void gvProducts_RowUpdated(object sender, GridViewUpdatedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occurred.<br /><br />" +
+              e.Exception.ToString();
+        }
+    }
+    protected void gvProducts_RowDeleted(object sender, GridViewDeletedEventArgs e)
+    {
+        if (e.Exception != null)
+        {
+            lblError.Text = "A database error has occurred.<br /><br />" +
+              e.Exception.ToString();
+        }
+    }
 }

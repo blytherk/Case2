@@ -4,14 +4,68 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody" Runat="Server">
     <div class="container">
-        <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" DataKeyNames="ProductCode" DataSourceID="dsGridView">
-            <Columns>
+        <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" DataKeyNames="ProductCode" DataSourceID="dsGridView" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Vertical" OnRowDeleted="gvProducts_RowDeleted" OnRowUpdated="gvProducts_RowUpdated">
+            
+            <AlternatingRowStyle BackColor="#DCDCDC" />
+            <Columns>                
                 <asp:BoundField DataField="ProductCode" HeaderText="ProductCode" ReadOnly="True" SortExpression="ProductCode" />
-                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                <asp:BoundField DataField="Version" HeaderText="Version" SortExpression="Version" />
-                <asp:BoundField DataField="ReleaseDate" HeaderText="ReleaseDate" SortExpression="ReleaseDate" />
-                <asp:CommandField ButtonType="Image" ShowDeleteButton="True" ShowEditButton="True" CancelImageUrl="~/Images/cancel.png" DeleteImageUrl="~/Images/delete.png" EditImageUrl="~/Images/delete.png"  />
+                <%--<asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />--%>
+                <asp:TemplateField HeaderText="Name">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtGridName" runat="server" Text='<%#Bind("Name") %>'>
+                        </asp:TextBox>
+                        <asp:RequiredFieldValidator
+                            ID="RequiredFieldValidator" 
+                            runat="server" 
+                            ControlToValidate="txtGridName" 
+                            ValidationGroup="Edit">
+                        </asp:RequiredFieldValidator>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblGridName" runat="server" Text='<%#Bind("Name") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <%--<asp:BoundField DataField="Version" HeaderText="Version" SortExpression="Version" />--%>
+                <asp:TemplateField HeaderText="Version">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtGridVersion" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator 
+                            ID="RequiredFieldValidator1" 
+                            runat="server" 
+                            ErrorMessage="Version field is required" 
+                            ValidationGroup="Edit">
+                        </asp:RequiredFieldValidator>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblGridVersion" runat="server" Text='<%#Bind("Version") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <%--<asp:BoundField DataField="ReleaseDate" HeaderText="ReleaseDate" SortExpression="ReleaseDate" />--%>
+                <asp:TemplateField HeaderText="Release Date">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtGridReleaseDate" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator 
+                            ID="RequiredFieldValidator2" 
+                            runat="server" 
+                            ErrorMessage="RequiredFieldValidator" 
+                            ValidationGroup="Edit">
+                        </asp:RequiredFieldValidator>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblGridReleaseDate" runat="server" Text='<%#Bind("ReleaseDate") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" CancelImageUrl="~/Images/cancel.png" DeleteImageUrl="~/Images/delete.png" EditImageUrl="~/Images/delete.png"  />
             </Columns>
+            <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
+            <HeaderStyle BackColor="#000084" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+            <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
+            <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#0000A9" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#000065" />
         </asp:GridView>
         <asp:SqlDataSource ID="dsGridView" runat="server" ConflictDetection="CompareAllValues" ConnectionString="<%$ ConnectionStrings:TechSupportConnectionString %>" DeleteCommand="DELETE FROM [Products] WHERE [ProductCode] = @original_ProductCode AND [Name] = @original_Name AND [Version] = @original_Version AND [ReleaseDate] = @original_ReleaseDate" InsertCommand="INSERT INTO [Products] ([ProductCode], [Name], [Version], [ReleaseDate]) VALUES (@ProductCode, @Name, @Version, @ReleaseDate)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT * FROM [Products] ORDER BY [ProductCode]" UpdateCommand="UPDATE [Products] SET [Name] = @Name, [Version] = @Version, [ReleaseDate] = @ReleaseDate WHERE [ProductCode] = @original_ProductCode AND [Name] = @original_Name AND [Version] = @original_Version AND [ReleaseDate] = @original_ReleaseDate">
             <DeleteParameters>
@@ -36,6 +90,49 @@
                 <asp:Parameter Name="original_ReleaseDate" Type="DateTime" />
             </UpdateParameters>
         </asp:SqlDataSource>
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+            HeaderText="Please correct the following errors:"
+            ValidationGroup="Edit" CssClass="error"/>
+        <p>To create a new category, enter the category information and click Add New Category.</p>
+        <p>
+            <asp:Label ID="lblError" runat="server" EnableViewState="False" CssClass="error"></asp:Label>
+        </p>
+        <label>Product Code:</label>
+        <asp:TextBox ID="txtProductCode" runat="server" MaxLength="10" CssClass="entry">
+        </asp:TextBox>&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" 
+                runat="server" ControlToValidate="txtProductCode" CssClass="validator"  
+                ErrorMessage="Product Code is a required field." ValidationGroup="New">
+            </asp:RequiredFieldValidator><br />
+        <label>Name:</label>
+        <asp:TextBox ID="txtName" runat="server" MaxLength="15" CssClass="entry">
+        </asp:TextBox>&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" 
+                runat="server"  ControlToValidate="txtName" CssClass="validator" 
+                ErrorMessage="Name is a required field." ValidationGroup="New">
+            </asp:RequiredFieldValidator><br />
+        <label>Version</label>
+        <asp:TextBox ID="txtVersion" runat="server" MaxLength="50" CssClass="entry">
+        </asp:TextBox>&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" 
+                runat="server"  ControlToValidate="txtVersion" CssClass="validator"
+                ErrorMessage="Version is a required field." ValidationGroup="New">
+            </asp:RequiredFieldValidator><br />
+        <label>Release Date:</label>
+        <asp:TextBox ID="txtReleaseDate" runat="server" MaxLength="15" CssClass="entry">
+        </asp:TextBox>&nbsp;
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" 
+                runat="server"  ControlToValidate="txtReleaseDate" CssClass="validator" 
+                ErrorMessage="Release Date is a required field." ValidationGroup="New">
+            </asp:RequiredFieldValidator><br />
+        <asp:RegularExpressionValidator 
+            ID="RegularExpressionValidator1" 
+            runat="server" 
+            ErrorMessage="Please enter date in mm/dd/yyyy format" 
+            ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"
+            ControlToValidate="txtReleaseDate"></asp:RegularExpressionValidator>
+        <asp:Button ID="btnAdd" runat="server" Text="Add New Category" 
+            OnClick="btnAdd_Click" ValidationGroup="New" />
     </div>
 </asp:Content>
 
