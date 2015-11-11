@@ -17,17 +17,15 @@
                                 <th class="col-xs-1">Tech name</th>
                                 <th class="col-xs-1">Data opened</th>
                                 <th class="col-xs-1">Date Closed</th>
-                                <tr>
-                                    <th colspan="4">Incident</th>
-                                </tr>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Incident</th>
                             </tr>
 
                         </thead>
                 </HeaderTemplate>
 
                 <FooterTemplate>
-                    
-                  
                     </table>
                     <asp:Label ID="Label1" runat="server" Text="*No incidents for this customer.*" Visible='<%#bool.Parse((dlIncidents.Items.Count==0).ToString()) %>' ForeColor="Red" Font-Bold="True"></asp:Label>
                 </FooterTemplate>
@@ -44,14 +42,14 @@
                             <td>
                                 <asp:Label ID="DateClosedLabel" runat="server" Text='<%# Eval("DateClosed") %>' /></td>
                             <tr>
-                                <td colspan="4">
-                                    <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>' /></td>
                             </tr>
+                            <td colspan="4">
+                                <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>' /></td>
                         </tr>
 
                     </tbody>
                 </ItemTemplate>
-                 
+
 
             </asp:DataList>
         </div>
@@ -62,7 +60,7 @@
             </SelectParameters>
         </asp:SqlDataSource>
     </div>
-    
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentFooter" runat="Server">
 </asp:Content>

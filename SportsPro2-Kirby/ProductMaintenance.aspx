@@ -126,7 +126,7 @@
         <asp:ValidationSummary ID="ValidationSummary1" runat="server"
             HeaderText="Please correct the following errors:"
             ValidationGroup="Edit" CssClass="error" />
-        <p>To create a new category, enter the category information and click Add New Category.</p>
+        <p>To create a new product, enter the product information and click Add New Product.</p>
         <p>
             <asp:Label ID="lblError" runat="server" EnableViewState="False" CssClass="error"></asp:Label>
         </p>
@@ -164,7 +164,7 @@
             ErrorMessage="Please enter date in mm/dd/yyyy format"
             ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"
             ControlToValidate="txtReleaseDate"></asp:RegularExpressionValidator>
-        <asp:Button ID="btnAdd" runat="server" Text="Add New Category"
+        <asp:Button ID="btnAdd" runat="server" Text="Add New Product"
             OnClick="btnAdd_Click" ValidationGroup="New" />
     </div>
 </asp:Content>
